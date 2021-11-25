@@ -18,7 +18,7 @@ const userSchema: Schema<UserDocument> = new Schema(
     {
         username: {
             type: String,
-            required: [true, 'User Must Have A  Username!'],
+            required: [true, 'User Must Have A Username!'],
             trim: true,
             lowercase: true,
             unique: [true, 'Username already exists!']
