@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: './src/libs/config/config.env' });
 
-import CONFIG from './libs/config';
+import CONFIG from '@libs/config';
 
 
 interface customLogger extends Logger {

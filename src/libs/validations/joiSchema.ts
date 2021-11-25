@@ -4,8 +4,6 @@ import { Request, Response, NextFunction, RequestHandler } from 'express';
 
 import { AppError } from '@libs/error';
 
-const defaultStringValidate = Joi.string().lowercase().trim();
-
 interface SanitizeSchema {
     params: Record<string, Joi.SchemaLike>,
     body: Record<string, Joi.SchemaLike>
@@ -77,10 +75,10 @@ export const reqValidate = (endpoint: string): RequestHandler => {
                         `'${req.params[errorKey]}'`
                     );
                     msg += ' in url parameters.';
-                } else {
+                } else if (req.body[errorKey]) {
                     msg = msg.replace(
                         `"${errorLabel}"`,
-                        `'${errorLabel}' : '${req.body[errorKey]}'`
+                        `${req.body[errorKey] ? `'${errorLabel}' : '${req.body[errorKey]}'` : `'${errorLabel}'`}`
                     );
                     msg += ' in JSON body.';
                 }

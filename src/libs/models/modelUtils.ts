@@ -3,14 +3,13 @@ import { Document, SchemaTimestampsConfig } from 'mongoose';
 
 interface DocumentWithTimestamp extends Document, SchemaTimestampsConfig {}
 
-const removeProps = (props: [keyof DocumentWithTimestamp]) => {
-    return (_: Document, ret: DocumentWithTimestamp) => {
+export const removeProps = (props: string[]) => {
+    return (_: Document, ret: Record<string, unknown>) => {
         if (Array.isArray(props)) {
             props.forEach((prop) => delete ret[prop]);
         }
 
-        delete ret.id;
-        delete ret.createdAt;
+        delete ret._id;
         delete ret.__v;
 
         return ret;

@@ -7,10 +7,12 @@ import cors from 'cors';
 import expressSession from 'express-session';
 
 // user custom modules
-import { AppError, errorController as globalErrorHandler } from './libs/error';
+import { AppError, errorController as globalErrorHandler } from '@libs/error';
+import HELPERS from '@libs/shared/helpers';
+import { rateLimiter } from '@libs/shared/helpers/helper';
 
-import HELPERS from './libs/shared/helpers';
-import { rateLimiter } from './libs/shared/helpers/helper';
+//routers
+import routers from '@features/index.routes';
 
 const xss = require('xss-clean');
 //helpers
@@ -88,9 +90,14 @@ app.get('/maintainance', (req, res) => {
     res.status(200).send('<h1>We Are Currently Undergoing Maintance</h1>');
 });
 
-app.get('/api/v1', (_, res) => {
-    res.status(200).send('<h1>Welcome to Speer-Tweeter Api</h1>');
-});
+// app.get('/api/v1', (_, res) => {
+//     res.status(200).send('<h1>Welcome to Speer-Tweeter Api</h1>');
+// });
+
+// FEATURE ROUTERS
+
+app.use('/api/v1', routers);
+
 
 
 app.all('*', (req, res, next) => {
