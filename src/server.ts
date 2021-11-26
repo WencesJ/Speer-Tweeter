@@ -86,7 +86,7 @@ import app from './app';
 const server = app.listen(PORT, async () => {
     _logger.log(
         'info',
-        `ℹℹℹ LISTENING TO SERVER http://127.0.0.1:${PORT} ON PORT ${PORT} ℹℹℹ`
+        `ℹℹℹ LISTENING TO SERVER http://127.0.0.1:${PORT}/api/v1 ON PORT ${PORT} ℹℹℹ`
     );
 });
 

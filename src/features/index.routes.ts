@@ -13,4 +13,8 @@ router.use('/tweets', tweetRouter);
 router.use('/chats', chatRouter);
 router.use('/msgs', msgRouter);
 
+router.use('/', (_, res) => {
+    res.send('<h1>Welcome to Speer-Tweeter Api</h1>')
+})
+
 export default router;

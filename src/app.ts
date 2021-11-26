@@ -74,14 +74,10 @@ app.use(cors(corsOptions));
 // TODO: Make Function Flexible by implementing parameter injection for rate limit expiration time
 
 // setting the rate limiters
-
-app.use('/', rateLimiter(50));
-
-// Would be moved to a seperate module
+// app.use('*', rateLimiter(50));
 
 
 // FEATURE ROUTERS
-
 app.use('/api/v1', routers);
 
 app.all('*', (req, res, next) => {

@@ -4,7 +4,28 @@ Speer-Tweeter Project
 
 # Speer-Tweeter Project
 
-A Speer-Tweeter - A minimal twitter application
+Speer-Tweeter - A minimal twitter application
+
+The simple **Speer-Tweeter Api** demonstrates a minimal twitter application that allows users to:
+
+**Registration and Authentication - User Feature**
+    - Register
+    - Login
+
+**Tweet on the platform - Tweet Feature**
+    - Create a Tweet
+    - Read all Tweets
+    - Read a Tweet
+    - Update a Tweet
+    - Delete a Tweet
+    - Like and Unlike a Tweet
+    - Retweet and undo a Retweet
+
+**Chat with other users - (Chat & Message(Msg) Feature)**
+    - Initiate a chat with a recipient
+    - Read all chat messages with a recipient
+    - Delete a chat
+    - Delete a message
 
 ### Prerequisites
 
@@ -45,7 +66,7 @@ Todo:Api Documentation
 
 **Open the source code and start editing!**
 
-Your site is now running at `http://localhost:3000/`!
+Your site is now running at `http://localhost:3000/api/v1/`!
 
 Open the `speer-tweeter` directory in your code editor of choice and edit files under `src`. Save your changes and the browser will update in real time!
 
@@ -60,3 +81,12 @@ Open the `speer-tweeter` directory in your code editor of choice and edit files 
 4: Work on the new branch and push the code.
 
 5: Create a PR.
+
+
+### Actions I could have implemented with time:
+- Socket Connection using "Socket.io" to enable realtime chat between users
+- Threading
+- Completing all endpoints tests cases(But all endpoints have been tested with postman)
+
+**Reason for the Above Incomplete Actions:**
+- Spent a considerable amount of time creating and tweaking the project structure libraries(libs).
