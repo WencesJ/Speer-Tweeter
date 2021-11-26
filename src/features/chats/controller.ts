@@ -111,7 +111,7 @@ class ChatController {
             /**
              * @type {Object|null} - Holds either the returned data object or null.
              *
-             * @describtion deletes a chat
+             * @description deletes a chat
              */
 
             await this.ChatService.delete(queryFields);

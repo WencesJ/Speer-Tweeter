@@ -55,9 +55,9 @@ class TweetService extends ApiFeatures {
     };
 
     /**
-     * Finds one Tweet Data by it's id or Slug.
+     * Finds one Tweet Data by it's id .
      * @async
-     * @param {string} id/slug - unique id or slug of the requested data.
+     * @param {string} id/slug - unique id  of the requested data.
      * @returns {Object} Returns the found requested data
      * @throws Mongoose Error
      */
@@ -111,9 +111,9 @@ class TweetService extends ApiFeatures {
     };
 
     /**
-     * Deletes one Tweet Data by it's id or Slug.
+     * Deletes one Tweet Data by it's id .
      * @async
-     * @param {string} id/slug - unique id or slug of the requested data.
+     * @param {string} id/slug - unique id  of the requested data.
      * @returns {} Returns null
      * @throws Mongoose Error
      */
@@ -130,7 +130,7 @@ class TweetService extends ApiFeatures {
     /**
      * Updates one Announcement Data by it's id.
      * @async
-     * @param {string} id/slug - unique id or slug of the requested data.
+     * @param {string} id/slug - unique id  of the requested data.
      * @returns {Object} Returns the found requested data
      * @throws Mongoose Error
      */
@@ -153,6 +153,40 @@ class TweetService extends ApiFeatures {
             };
         }
 
+        return {
+            value: {
+                data: tweet,
+            },
+        };
+    };
+
+    /**
+     * Likes or Unlike a Tweet Data by it's id.
+     * @async
+     * @param {string} id/slug - unique id  of the requested data.
+     * @returns {} Returns Tweet
+     * @throws Mongoose Error
+     */
+     async likeAndUnlikeTweet(id: string, action: string) {
+
+        const tweet = await this.TweetModel.findById(id);
+
+        if (!tweet) {
+            return {
+                error: {
+                    msg: 'Invalid Tweet. Tweet Does Not Exist!',
+                    code: STATUS.BAD_REQUEST,
+                },
+            }
+        }
+
+        if (action === 'like') {
+            await tweet.likeTweet();
+        }
+        else if (action === 'unlike') {
+            await tweet.unlikeTweet();
+        }
+        
         return {
             value: {
                 data: tweet,

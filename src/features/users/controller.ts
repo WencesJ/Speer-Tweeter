@@ -81,7 +81,7 @@ class UserController extends Authentication {
             /**
              * @type {Object|null} - Holds either the returned data object or null.
              *
-             * @describtion Use Either a mongodbUniqueId Or username to Search
+             * @description Use Either a mongodbUniqueId Or username to Search
              */
 
             const { error, value: { data: user = {} } = {} } =
@@ -141,7 +141,7 @@ class UserController extends Authentication {
             /**
              * @type {Object|null} - Holds either the returned data object or null.
              *
-             * @describtion deletes a user
+             * @description deletes a user
              */
 
             await this.UserService.delete(queryFields);
@@ -171,7 +171,7 @@ class UserController extends Authentication {
             /**
              * @type {Object|null} - Holds either the returned data object or null.
              *
-             * @describtion Updates a user
+             * @description Updates a user
              */
 
             const { error, value: { data: user = {} } = {} } =

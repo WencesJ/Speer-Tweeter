@@ -80,7 +80,7 @@ class TweetController {
             /**
              * @type {Object|null} - Holds either the returned data object or null.
              *
-             * @describtion Use Either a mongodbUniqueId Or tweetname to Search
+             * @description Use Either a mongodbUniqueId Or tweetname to Search
              */
 
             const { error, value: { data: tweet = {} } = {} } =
@@ -141,7 +141,7 @@ class TweetController {
             /**
              * @type {Object|null} - Holds either the returned data object or null.
              *
-             * @describtion deletes a tweet
+             * @description deletes a tweet
              */
 
             await this.TweetService.delete(queryFields);
@@ -172,7 +172,7 @@ class TweetController {
             /**
              * @type {Object|null} - Holds either the returned data object or null.
              *
-             * @describtion Updates a tweet
+             * @description Updates a tweet
              */
 
             const { error, value: { data: tweet = {} } = {} } =
@@ -186,6 +186,62 @@ class TweetController {
             res.status(STATUS.ACCEPTED).json({
                 message: MSG.SUCCESS,
                 tweet,
+            });
+        }
+    );
+
+    /**
+     * Like a Tweet Data
+     * @async
+     * @route {POST} /:id/tweet
+     * @access protected
+     */
+     likeTweet = catchAsync(
+        async (req: Request, res: Response, next: NextFunction) => {
+            /**
+             * @type {Object|null} - Holds either the returned data object or null.
+             *
+             * @description deletes a tweet
+            */
+
+            const { error, value: { data: tweet = {} } = {} } = await this.TweetService.likeAndUnlikeTweet(req.params._id, 'like');
+
+            if (error) {
+                return next(new AppError(error.msg, error.code));
+            }
+
+            // Returns a json response
+            res.status(STATUS.ACCEPTED).json({
+                message: MSG.SUCCESS,
+                tweet
+            });
+        }
+    );
+
+    /**
+     * unlike a Tweet Data
+     * @async
+     * @route {POST} /:id/tweet
+     * @access protected
+     */
+     unlikeTweet = catchAsync(
+        async (req: Request, res: Response, next: NextFunction) => {
+             /**
+             * @type {Object|null} - Holds either the returned data object or null.
+             *
+             * @description deletes a tweet
+            */
+
+            const { error, value: { data: tweet = {} } = {} } = await this.TweetService.likeAndUnlikeTweet(req.params._id, 'unlike');
+
+            if (error) {
+                return next(new AppError(error.msg, error.code));
+            }
+            
+            // Returns a json response
+            res.status(STATUS.ACCEPTED).json({
+                message: MSG.SUCCESS,
+                tweet
             });
         }
     );

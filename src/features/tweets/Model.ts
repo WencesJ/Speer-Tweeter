@@ -19,7 +19,7 @@ export interface TweetDocument extends Document {
     findByAuthor: (author: string) => TweetDocument;
 
     likeTweet: () => void;
-    unLikeTweet: () => void
+    unlikeTweet: () => void;
 }
 
 const tweetSchema: Schema<TweetDocument> = new Schema(

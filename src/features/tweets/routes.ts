@@ -11,6 +11,8 @@ import './sanitize';
 const {
     getAllTweets,
     getTweet,
+    likeTweet,
+    unlikeTweet,
     updateTweet,
     deleteTweet,
     createTweet,
@@ -39,5 +41,9 @@ router
     .patch(reqValidate('updateTweet'), updateTweet)
 
     .delete(reqValidate('deleteTweet'), deleteTweet);
+
+router.patch('/:_id/like', likeTweet)
+
+router.patch('/:_id/unlike', unlikeTweet)
 
 export default router;

@@ -94,7 +94,7 @@ class MsgController {
             /**
              * @type {Object|null} - Holds either the returned data object or null.
              *
-             * @describtion Use Either a mongodbUniqueId Or msgname to Search
+             * @description Use Either a mongodbUniqueId Or msgname to Search
              */
 
             const {value: { data: msgs = {} } = {} } =
@@ -123,7 +123,7 @@ class MsgController {
             /**
              * @type {Object|null} - Holds either the returned data object or null.
              *
-             * @describtion deletes a msg
+             * @description deletes a msg
              */
 
             await this.MsgService.delete(queryFields);
