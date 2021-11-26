@@ -79,26 +79,10 @@ app.use('/', rateLimiter(50));
 
 // Would be moved to a seperate module
 
-// Homepage
-
-app.get('/', (_, res) => {
-    res.render('index');
-});
-
-// MAINTAINANCE ENDPOINT
-app.get('/maintainance', (req, res) => {
-    res.status(200).send('<h1>We Are Currently Undergoing Maintance</h1>');
-});
-
-// app.get('/api/v1', (_, res) => {
-//     res.status(200).send('<h1>Welcome to Speer-Tweeter Api</h1>');
-// });
 
 // FEATURE ROUTERS
 
 app.use('/api/v1', routers);
-
-
 
 app.all('*', (req, res, next) => {
     return next(

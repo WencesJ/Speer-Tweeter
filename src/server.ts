@@ -90,7 +90,6 @@ const server = app.listen(PORT, async () => {
     );
 });
 
-
 // HANDLING unhandledRejection events
 process.on('unhandledRejection', async (err: Error) => {
     _logger.log(

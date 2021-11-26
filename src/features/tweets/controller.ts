@@ -1,7 +1,7 @@
 // NODE MODULES
 
 // TWEET MODULES
-import TweetService from './service';
+import tweetService from './service';
 
 import { CustomRequest } from '@libs/interfaces/user';
 
@@ -14,11 +14,6 @@ import CONSTANTS from '@libs/shared/constants';
 const { STATUS, MSG } = CONSTANTS;
 
 // end of requiring the modules
-/**
-/**
- * @type {Object.<TweetService>} - Instance of TweetService class
- */
-const tweetServiceInstance = new TweetService();
 
 // TWEET AUTHENTICATION CONTROLLERS
 /**
@@ -33,7 +28,7 @@ class TweetController {
      *
      */
 
-    constructor(public TweetService = tweetServiceInstance) {
+    constructor(public TweetService = tweetService) {
         /**
          * @type {Object}
          * @borrows tweetService
@@ -43,7 +38,7 @@ class TweetController {
     /**
      * Creates a Tweet
      * @async
-     * @route {POST} /tweet/
+     * @route {POST} /
      * @access protected
      */
     createTweet: RequestHandler = catchAsync(
@@ -71,8 +66,8 @@ class TweetController {
     /**
      * Gets one Tweet Data
      * @async
-     * @route {GET} /tweet/:slug or :/id
-     * @access public
+     * @route {GET} /:id/tweet
+     * @access protected
      */
     getTweet: RequestHandler = catchAsync(
         async (req: Request, res: Response, next: NextFunction) => {
@@ -81,8 +76,6 @@ class TweetController {
              */
 
             const queryFields = req.params;
-
-            console.log(queryFields);
 
             /**
              * @type {Object|null} - Holds either the returned data object or null.
@@ -107,10 +100,10 @@ class TweetController {
     );
 
     /**
-     * Gets All Tweet Datas
+     * Gets one Tweet Data
      * @async
-     * @route {GET} /tweets/
-     * @access public
+     * @route {GET} /
+     * @access protected
      */
     getAllTweets = catchAsync(async (req: Request, res: Response) => {
         /**
@@ -133,6 +126,12 @@ class TweetController {
         });
     });
 
+    /**
+     * Delete one Tweet Data
+     * @async
+     * @route {DELETE} /:id/tweet
+     * @access protected
+     */
     deleteTweet = catchAsync(
         async (req: Request, res: Response, next: NextFunction) => {
             /**
@@ -155,8 +154,11 @@ class TweetController {
     );
 
     /**
-     * @route {GET} - /tweets/:id or /:slug
-     */
+     * Updates one Tweet Data
+     * @async
+     * @route {UPDATE} /:id/tweet
+     * @access protected
+    */
 
     updateTweet = catchAsync(
         async (req: Request, res: Response, next: NextFunction) => {

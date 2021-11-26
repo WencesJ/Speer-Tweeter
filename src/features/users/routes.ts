@@ -11,14 +11,11 @@ const {
     logOut,
     changePassword,
     getUser,
-    updateUser,
-    authorization,
 } = Controller;
 
 import { reqValidate } from '@libs/validations';
 import './sanitize';
 
-// const userCntrl = new UserController();
 
 const router = Router();
 

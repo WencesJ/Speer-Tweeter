@@ -18,8 +18,6 @@ const {
 
 import { reqValidate } from '@libs/validations';
 
-// const tweetCntrl = new TweetController();
-
 const router = Router();
 
 router.use(userCntrl.authorization);

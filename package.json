@@ -27,6 +27,7 @@
     },
     "homepage": "",
     "dependencies": {
+        "@types/socket.io": "^3.0.2",
         "app-root-path": "^3.0.0",
         "bcrypt": "^5.0.0",
         "connect-mongo": "^3.2.0",
@@ -48,6 +49,7 @@
         "shelljs": "^0.8.4",
         "short-unique-id": "^3.0.4",
         "slugify": "^1.4.5",
+        "socket.io": "^4.4.0",
         "validator": "^13.1.1",
         "winston": "^3.3.3",
         "xss-clean": "^0.1.1"

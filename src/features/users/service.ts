@@ -206,4 +206,4 @@ class UserService extends ApiFeatures {
     }
 }
 
-export default UserService;
+export default new UserService();

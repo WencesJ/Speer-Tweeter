@@ -2,8 +2,10 @@
 import { Model } from 'mongoose';
 import { Request } from 'express';
 
-// TWEET MODULES
-import TweetsModel, { TweetDocument } from './Model';
+import { CustomRequest } from '@libs/interfaces/user';
+
+// CHAT MODULES
+import ChatsModel, { ChatDocument } from './Model';
 import ApiFeatures from '@libs/shared/utils/ApiFeatures';
 import CONSTANTS from '@libs/shared/constants';
 
@@ -15,66 +17,66 @@ interface DataTemplate {
     [unit: string]: string;
 }
 
-type CustomModel = Model<TweetDocument> & TweetDocument;
+type CustomModel = Model<ChatDocument> & ChatDocument;
 
-class TweetService extends ApiFeatures {
+class ChatService extends ApiFeatures {
     /**
-     * Creates tweet controller
-     * @param {Object} [tweetModel = TweetModel] - Instance of a Mongoose Schema of Announcement Model
+     * Creates chat controller
+     * @param {Object} [chatModel = ChatModel] - Instance of a Mongoose Schema of Announcement Model
      * @param {Object} [eventEmitter = compEmitter] - Instance of an Emitter that suscribes to a database operation
      *
      */
 
     constructor(
-        protected TweetModel = TweetsModel as CustomModel,
+        protected ChatModel = ChatsModel as CustomModel,
     ) {
         super();
     }
 
     /**
-     * Creates an Tweet.
+     * Creates an Chat.
      * @async
-     * @param {Object} details - Details required to create a Tweet.
-     * @returns {Object} Returns the created Tweet
+     * @param {Object} details - Details required to create a Chat.
+     * @returns {Object} Returns the created Chat
      * @throws Mongoose Error
      */
 
-    async create(details: Request) {
+    async create(details: object) {
         /**
          * @type {Object} - Holds the created data object.
          */
-        const tweet = await this.TweetModel.create({
+        const chat = await this.ChatModel.create({
             ...details,
         });
 
         return {
             value: {
-                data: tweet,
+                data: chat,
             },
         };
     };
 
     /**
-     * Finds one Tweet Data by it's id or Slug.
+     * Finds one Chat Data by it's id .
      * @async
-     * @param {string} id/slug - unique id or slug of the requested data.
+     * @param {string} id/slug - unique id  of the requested data.
      * @returns {Object} Returns the found requested data
      * @throws Mongoose Error
      */
     async get(query: object, populateOptions = undefined) {
-        let tweetQuery = this.TweetModel.findOne({ ...query });
+        let chatQuery = this.ChatModel.findOne({ ...query });
 
         // TODO: Populate populateOptions
         if (populateOptions !== undefined)
-            tweetQuery = tweetQuery.populate(populateOptions);
-        // else tweetQuery = tweetQuery.lean();
+            chatQuery = chatQuery.populate(populateOptions);
+        // else chatQuery = chatQuery.lean();
 
-        const tweet = await tweetQuery;
+        const chat = await chatQuery;
 
-        if (!tweet) {
+        if (!chat) {
             return {
                 error: {
-                    msg: 'Invalid Tweet. Tweet Does Not Exist!',
+                    msg: 'Invalid Chat. Chat Does Not Exist!',
                     code: STATUS.BAD_REQUEST,
                 },
             };
@@ -82,7 +84,27 @@ class TweetService extends ApiFeatures {
 
         return {
             value: {
-                data: tweet,
+                data: chat,
+            },
+        };
+    };
+    /**
+     * Finds one Chat Data by it's id.
+     * @async
+     * @param {string} id/slug - unique id  of the requested data.
+     * @returns {Object} Returns the found requested data
+     * @throws Mongoose Error
+     */
+    async getByRecipient(recipients: string[]) {
+        let chat = await this.ChatModel.findByMembers(recipients);
+
+        if (!chat) {
+            chat = await this.ChatModel.create({ members: recipients });
+        }
+
+        return {
+            value: {
+                data: chat,
             },
         };
     };
@@ -95,34 +117,34 @@ class TweetService extends ApiFeatures {
      * @throws Mongoose Error
      */
     async getAll(query: Request) {
-        const tweetsQuery = this.api(this.TweetModel, query)
+        const chatsQuery = this.api(this.ChatModel, query)
             .filter()
             .sort()
             .limitFields()
             .paginate();
 
-        const tweets = await tweetsQuery.query.lean();
+        const chats = await chatsQuery.query.lean();
 
         return {
             value: {
-                data: tweets,
+                data: chats,
             },
         };
     };
 
     /**
-     * Deletes one Tweet Data by it's id or Slug.
+     * Deletes one Chat Data by it's id .
      * @async
-     * @param {string} id/slug - unique id or slug of the requested data.
+     * @param {string} id/slug - unique id  of the requested data.
      * @returns {} Returns null
      * @throws Mongoose Error
      */
     async delete(query: object) {
-        const tweet = await this.TweetModel.findOneAndDelete({ ...query });
+        await this.ChatModel.deleteChatWithMsgs({ ...query });
 
         return {
             value: {
-                data: tweet,
+                data: {},
             },
         };
     };
@@ -130,12 +152,12 @@ class TweetService extends ApiFeatures {
     /**
      * Updates one Announcement Data by it's id.
      * @async
-     * @param {string} id/slug - unique id or slug of the requested data.
+     * @param {string} id/slug - unique id  of the requested data.
      * @returns {Object} Returns the found requested data
      * @throws Mongoose Error
      */
     async update(query: object, details: Request) {
-        const tweet = await this.TweetModel.findOneAndUpdate(
+        const chat = await this.ChatModel.findOneAndUpdate(
             query,
             { ...details },
             {
@@ -144,10 +166,10 @@ class TweetService extends ApiFeatures {
             }
         );
 
-        if (!tweet) {
+        if (!chat) {
             return {
                 error: {
-                    msg: 'Invalid Tweet. Tweet Does Not Exist!',
+                    msg: 'Invalid Chat. Chat Does Not Exist!',
                     code: STATUS.BAD_REQUEST,
                 },
             };
@@ -155,10 +177,10 @@ class TweetService extends ApiFeatures {
 
         return {
             value: {
-                data: tweet,
+                data: chat,
             },
         };
     };
 }
 
-export default new TweetService();
+export default new ChatService();

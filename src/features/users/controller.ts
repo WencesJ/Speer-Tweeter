@@ -1,7 +1,7 @@
 // NODE MODULES
 
 // USER MODULES
-import UserService from './service';
+import userService from './service';
 
 import { CustomRequest } from '@libs/interfaces/user';
 
@@ -16,11 +16,6 @@ import Authentication from '../auth/auth';
 const { STATUS, MSG } = CONSTANTS;
 
 // end of requiring the modules
-/**
-/**
- * @type {Object.<UserService>} - Instance of UserService class
- */
-const userServiceInstance = new UserService();
 
 // USER AUTHENTICATION CONTROLLERS
 /**
@@ -35,7 +30,7 @@ class UserController extends Authentication {
      *
      */
 
-    constructor(public UserService = userServiceInstance) {
+    constructor(public UserService = userService) {
         super(UserService);
         /**
          * @type {Object}
@@ -46,8 +41,7 @@ class UserController extends Authentication {
     /**
      * Creates a User
      * @async
-     * @route {POST} /user/
-     * @access protected
+     * @access public
      */
     createUser: RequestHandler = catchAsync(
         async (req: Request, res: Response) => {
@@ -73,8 +67,8 @@ class UserController extends Authentication {
     /**
      * Gets one User Data
      * @async
-     * @route {GET} /user/:slug or :/id
-     * @access public
+     * @route {GET} /:username
+     * @access protected
      */
     getUser: RequestHandler = catchAsync(
         async (req: CustomRequest, res: Response, next: NextFunction) => {
@@ -109,7 +103,7 @@ class UserController extends Authentication {
     /**
      * Gets All User Datas
      * @async
-     * @route {GET} /users/
+     * @route {GET} /
      * @access public
      */
     getAllUsers = catchAsync(async (req: Request, res: Response) => {
@@ -133,6 +127,11 @@ class UserController extends Authentication {
         });
     });
 
+    /**
+     * Deletes one User Data
+     * @async
+     * @access protected
+    */
     deleteUser = catchAsync(
         async (req: Request, res: Response, next: NextFunction) => {
             /**
@@ -155,8 +154,10 @@ class UserController extends Authentication {
     );
 
     /**
-     * @route {GET} - /users/:id or /:slug
-     */
+     * Updates one User Data
+     * @async
+     * @access protected
+    */
 
     updateUser = catchAsync(
         async (req: CustomRequest, res: Response, next: NextFunction) => {
