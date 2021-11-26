@@ -2,7 +2,6 @@
 
 import { Schema, model, Document, Date } from 'mongoose';
 
-import { hash, compare } from 'bcrypt';
 import { removeProps } from '@libs/models/modelUtils';
 
 export interface TweetDocument extends Document {
@@ -15,11 +14,12 @@ export interface TweetDocument extends Document {
         sec: number
     };
     likes: number,
-    thread: boolean
+    threads: boolean
     
     findByAuthor: (author: string) => TweetDocument;
 
-    validPassword: (password: string) => Boolean;
+    likeTweet: () => void;
+    unLikeTweet: () => void
 }
 
 const tweetSchema: Schema<TweetDocument> = new Schema(
@@ -33,7 +33,8 @@ const tweetSchema: Schema<TweetDocument> = new Schema(
 
         author: {
             type: Schema.Types.ObjectId,
-            required: [true, 'Tweet must have an author!']
+            required: [true, 'Tweet must have an author!'],
+            ref: 'User'
         },
 
         date: {
@@ -68,7 +69,7 @@ const tweetSchema: Schema<TweetDocument> = new Schema(
             min: [0, 'Tweet likes cannot be less than 0!'],
         },
 
-        thread: {
+        threads: {
             type: Boolean,
             default: false
         }
@@ -88,16 +89,7 @@ const tweetSchema: Schema<TweetDocument> = new Schema(
     }
 );
 
-// indexing the doc for quick fetch
-
-tweetSchema.index({ tweetname: 1 });
-
 // initiating the pre and post hooks
-
-// TWEET STATICS
-tweetSchema.statics.findByTweetname = async function (tweetname: string) {
-    return await this.findOne({ tweetname });
-};
 
 // TWEET METHODS
 tweetSchema.methods.likeTweet = async function () {
