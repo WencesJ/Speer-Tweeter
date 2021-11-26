@@ -39,7 +39,7 @@ class TweetService extends ApiFeatures {
      * @throws Mongoose Error
      */
 
-    async create(details: Request) {
+    async create(details: object) {
         /**
          * @type {Object} - Holds the created data object.
          */
@@ -192,6 +192,30 @@ class TweetService extends ApiFeatures {
                 data: tweet,
             },
         };
+    };
+     async reTweet(details: Record<string, unknown>) {
+
+        let tweet = await this.TweetModel.findOne({ author: details.author as string, retweet: details.retweet });
+
+        let deleted = false;
+
+        if (!tweet) {
+            let { value } = await this.create({ ...details });
+            
+            tweet = value.data;
+        }
+        else {
+            await tweet.delete();
+            deleted = true;
+        }
+
+        return {
+            value: {
+                data: tweet,
+                deleted
+            },
+        };
+
     };
 }
 

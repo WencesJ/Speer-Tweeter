@@ -16,6 +16,7 @@ const {
     updateTweet,
     deleteTweet,
     createTweet,
+    reTweet
 } = Controller;
 
 import { reqValidate } from '@libs/validations';
@@ -30,7 +31,9 @@ router
 
     .get(getAllTweets)
 
-    .post(reqValidate('createTweet'), createTweet)
+    .post(reqValidate('createTweet'), createTweet);
+
+router.post('/retweet', reqValidate('createRetweet'), reTweet);
 
 router
 

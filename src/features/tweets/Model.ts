@@ -26,7 +26,6 @@ const tweetSchema: Schema<TweetDocument> = new Schema(
     {
         text: {
             type: String,
-            required: [true, 'Tweet must have a Text!'],
             trim: true,
             lowercase: true,
         },
@@ -72,7 +71,12 @@ const tweetSchema: Schema<TweetDocument> = new Schema(
         threads: {
             type: Boolean,
             default: false
-        }
+        },
+
+        retweet: {
+            type: Schema.Types.ObjectId,
+            ref: 'Tweet'
+        },
     },
 
     {

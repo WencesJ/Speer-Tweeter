@@ -26,6 +26,25 @@ const TweetSanitize = {
             },
         },
     },
+    createRetweet: {
+        params: {},
+    
+        body: {
+            text: defaultStringValidate
+                .min(1)
+                .max(200),
+    
+            date: Joi.date().required(),
+
+            time: {
+                hour: Joi.number().min(0).max(23).required(),
+                min: Joi.number().min(0).max(59).required(),
+                sec: Joi.number().min(0).max(59).required(),
+            },
+
+            retweet: defaultStringValidate.required()
+        },
+    },
     
     getTweet: {
         params: {

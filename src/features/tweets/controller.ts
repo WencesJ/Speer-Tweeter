@@ -224,7 +224,7 @@ class TweetController {
      * @route {POST} /:id/tweet
      * @access protected
      */
-     unlikeTweet = catchAsync(
+    unlikeTweet = catchAsync(
         async (req: Request, res: Response, next: NextFunction) => {
              /**
              * @type {Object|null} - Holds either the returned data object or null.
@@ -243,6 +243,29 @@ class TweetController {
                 message: MSG.SUCCESS,
                 tweet
             });
+        }
+    );
+    reTweet = catchAsync(
+        async (req: CustomRequest, res: Response, next: NextFunction) => {
+             /**
+             * @type {Object|null} - Holds either the returned data object or null.
+             *
+             * @description deletes a tweet
+            */
+            const details = { ...req.body, author: req.user.id };
+
+            const { value: { data: tweet = {}, deleted } = {} } = await this.TweetService.reTweet(details);
+            
+            const status = (deleted) ? STATUS.NO_CONTENT : STATUS.ACCEPTED;
+            
+            // Returns a json response
+            return res.status(status).json({
+                message: MSG.SUCCESS,
+                tweet
+            });
+
+
+            
         }
     );
 }
